@@ -5,24 +5,35 @@
 //collect input of country store in variable
 //return TEMP in Fahrenheit <h3>
 
-const APIkey= "f8c4c9fbfffe0029705c3398152d222f";
-
-const apiURL= `https://api.openweathermap.org/data/2.5/weather?q={city},{country_code}&appid=${APIkey}`;
 
 document.querySelector('button').onclick = getWEATHER
 
+
+
 function getWEATHER(){
 //get user input for city and country
+const inputcountry = document.querySelector(".country").value;
+console.log(inputcountry);
+const inputcity = document.querySelector(".city").value;
+console.log(inputcity);
 
-const inputCITY = document.querySelector(".city").value;
-console.log(inputCITY);
+const APIkey= "f8c4c9fbfffe0029705c3398152d222f";
+const url= `https://api.openweathermap.org/data/2.5/weather?q=${inputcity}&${inputcountry}&appid=${APIkey}`;
 
-const inputCOUNTRY = document.querySelector(".country").value;
-console.log(inputCOUNTRY);
-}
+console.log(url)
+
 
 //fetch requests
-// fetch(apiURL) 
-// .then((response) => response.json())
-// .then((answer) => console.log(answer))
-// .catch()
+fetch(url) 
+.then ((x) => x.json ())
+.then((data) => {
+   console.log(data);
+ document.querySelector('.main').innerText =((data.main.temp -273.15) * 9/5 + 32).toFixed(0) ;
+ document.querySelector('.high').innerText =((data.main.temp_max -273.15) * 9/5 + 32).toFixed(0) ;
+document.querySelector('.low').innerText =((data.main.temp_min -273.15) * 9/5 + 32).toFixed(0) ;
+
+
+})
+.catch(err => {
+//     console.log(`err${err}`);
+})};
